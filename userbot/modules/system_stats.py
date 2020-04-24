@@ -125,7 +125,7 @@ async def amireallyalive(alive):
     await alive.edit(
                      "`Hi! I am Althea. \n`"
                     
-                     "`Meet my boss, BonnoKush. \n I am built on:\n`"
+                     "`Meet my boss, BonnoKush. \nI am built on:\n`"
      
                      f"`Telethon version: {version.__version__} \n`"
 
