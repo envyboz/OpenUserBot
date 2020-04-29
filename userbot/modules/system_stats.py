@@ -12,7 +12,7 @@ from shutil import which
 from os import remove
 from telethon import version
 
-from userbot import CMD_HELP, ALIVE_NAME
+from userbot import CMD_HELP, is_mongo_alive, ALIVE_NAME
 from userbot.events import register
 
 # ================= CONSTANT =================
@@ -122,14 +122,18 @@ async def pipcheck(pip):
 @register(outgoing=True, pattern="^.alive$")
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
+    
+    if not is_mongo_alive():
+        db = "Mongo DB seems to be failing!"
+    else:
+        db = "Databases functioning normally!"
     await alive.edit(
-                     "`Hi! I am Althea. \n`"
-                    
-                     "`Meet my boss, BonnoKush. \nI am built on:\n`"
-     
-                     f"`Telethon version: {version.__version__} \n`"
-
-                     f"`Python version: {python_version()} `"
+                     "Althea is alive! \n\n"
+                     f"Telethon version: {version.__version__} \n"
+                     f"Python: {python_version()} \n"
+                     f"Master User: {DEFAULTUSER} \n"
+                     f"Database status: {db}\n"
+                     f"Tagged bot version: v1.0"
                      )    
 
 
