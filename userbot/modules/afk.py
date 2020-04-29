@@ -33,8 +33,6 @@ AFKSTR = [
     "`Hello, welcome to my away message, how may I ignore you today?`",
     "`I'm away over 7 seas and 7 countries,\n7 waters and 7 continents,\n7 mountains and 7 hills,\n7 plains and 7 mounds,\n7 pools and 7 lakes,\n7 springs and 7 meadows,\n7 cities and 7 neighborhoods,\n7 blocks and 7 houses...\n\nWhere not even your messages can reach me!`",
     "`I'm away from the keyboard at the moment, but if you'll scream loud enough at your screen, I might just hear you.`",
-    "`I went that way\n---->`",
-    "`I went this way\n<----`",
     "`Please leave a message and make me feel even more important than I already am.`",
     "`I am not here so stop writing to me,\nor else you will find yourself with a screen full of your own messages.`",
     "`If I were here,\nI'd tell you where I am.\n\nBut I'm not,\nso ask me when I return...`",
@@ -77,9 +75,9 @@ async def set_afk(afk_e):
     afk_start = start_1.replace(microsecond=0)
     if string:
         AFKREASON = string
-        await afk_e.edit("**Going AFK!**")
+        await afk_e.edit("`Going AFK!`")
     else:
-        await afk_e.edit("**Going AFK!**")
+        await afk_e.edit("`Going AFK!`")
     if BOTLOG:
         await afk_e.client.send_message(BOTLOG_CHATID, "#AFK\nYou went AFK!")
     ISAFK = True
@@ -102,14 +100,14 @@ async def type_afk_is_not_true(notafk):
     afk_end = back_alive.replace(microsecond=0)
     if ISAFK:
         ISAFK = False
-        msg = await notafk.edit("**I'm back !**")
+        msg = await notafk.edit("`I'm back!`")
         time.sleep(3)
         await msg.delete()
         if BOTLOG:
             await notafk.client.send_message(
                 BOTLOG_CHATID,
-                "You've recieved " + str(COUNT_MSG) + " messages from " +
-                str(len(USERS)) + " chats while you were away",
+                "`You've recieved` " + str(COUNT_MSG) + " `messages from` " +
+                str(len(USERS)) + " `chats while you were away.`"
             )
             for i in USERS:
                 name = await notafk.client.get_entity(i)
@@ -117,7 +115,7 @@ async def type_afk_is_not_true(notafk):
                 await notafk.client.send_message(
                     BOTLOG_CHATID,
                     "[" + name0 + "](tg://user?id=" + str(i) + ")" +
-                    " sent you " + "`" + str(USERS[i]) + " messages`",
+                    " `sent you` " + str(USERS[i]) + " `messages`",
                 )
         COUNT_MSG = 0
         USERS = {}
@@ -136,7 +134,7 @@ async def mention_afk(mention):
     global afk_end
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
-    afk_since = "**a while ago**"
+    afk_since = "`a while ago`"
     if mention.message.mentioned and not (await mention.get_sender()).bot:
         if ISAFK:
             now = datetime.now()
@@ -150,7 +148,7 @@ async def mention_afk(mention):
             time %= 60
             seconds = time
             if days == 1:
-                afk_since = "**Yesterday**"
+                afk_since = "`Yesterday`"
             elif days > 1:
                 if days > 6:
                     date = now + \
@@ -161,26 +159,24 @@ async def mention_afk(mention):
                     wday = now + datetime.timedelta(days=-days)
                     afk_since = wday.strftime('%A')
             elif hours > 1:
-                afk_since = f"`{int(hours)}h {int(minutes)}m` **ago**"
+                afk_since = f"`{int(hours)}h {int(minutes)}m ago`"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)}m {int(seconds)}s` **ago**"
+                afk_since = f"`{int(minutes)}m {int(seconds)}s ago`"
             else:
-                afk_since = f"`{int(seconds)}s` **ago**"
+                afk_since = f"`{int(seconds)}s ago`"
             if mention.sender_id not in USERS:
                 if AFKREASON:
-                    await mention.reply(f"My boss **{DEFAULTUSER}** is **afk since** {afk_since}.\
-                        \n**Because my boss is** `{AFKREASON}`")
+                    await mention.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe is currently {AFKREASON}.`")
                 else:
-                    await mention.reply(f"My boss {DEFAULTUSER} is **afk since** {afk_since}.\nMy boss has left a word for you only: \n{AFKSK}\n`.` ")
+                    await mention.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe said: \n{AFKSK}\n`.` ")
                 USERS.update({mention.sender_id: 1})
                 COUNT_MSG = COUNT_MSG + 1
             elif mention.sender_id in USERS:
                 if USERS[mention.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-                        await mention.reply(f"My boss **{DEFAULTUSER}** is **afk since** {afk_since}.\
-                            \n**Because my boss is** `{AFKREASON}`")
+                        await mention.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe is currently {AFKREASON}.`")
                     else:
-                        await mention.reply(f"My boss {DEFAULTUSER} is **afk since** {afk_since}.\nMy boss has left a word for you only: \n{AFKSK}\n`.` ")
+                        await mention.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\He said: \n{AFKSK}\n`.`")
                     USERS[mention.sender_id] = USERS[mention.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
                 else:
@@ -203,7 +199,7 @@ async def afk_on_pm(sender):
     global afk_end
     back_alivee = datetime.now()
     afk_end = back_alivee.replace(microsecond=0)
-    afk_since = "**a while ago**"
+    afk_since = "`a while ago`"
     if sender.is_private and sender.sender_id != 777000 and not (
             await sender.get_sender()).bot:
         if PM_AUTO_BAN:
@@ -226,7 +222,7 @@ async def afk_on_pm(sender):
             time %= 60
             seconds = time
             if days == 1:
-                afk_since = "**Yesterday**"
+                afk_since = "`Yesterday`"
             elif days > 1:
                 if days > 6:
                     date = now + \
@@ -237,26 +233,24 @@ async def afk_on_pm(sender):
                     wday = now + datetime.timedelta(days=-days)
                     afk_since = wday.strftime('%A')
             elif hours > 1:
-                afk_since = f"`{int(hours)}h {int(minutes)}m` **ago**"
+                afk_since = f"`{int(hours)}h {int(minutes)}m ago`"
             elif minutes > 0:
-                afk_since = f"`{int(minutes)}m {int(seconds)}s` **ago**"
+                afk_since = f"`{int(minutes)}m {int(seconds)}s ago`"
             else:
-                afk_since = f"`{int(seconds)}s` **ago**"
+                afk_since = f"`{int(seconds)}s ago`"
             if sender.sender_id not in USERS:
                 if AFKREASON:
-                    await sender.reply(f"My boss **{DEFAULTUSER}** is **afk since** {afk_since}.\
-                        \n**Because my boss is** `{AFKREASON}`")
+                    await sender.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe is currently {AFKREASON}.`")
                 else:
-                    await sender.replyf(f"My boss {DEFAULTUSER} is **afk since** {afk_since}.\nMy boss has left a word for you only: \n{AFKSK}\n`.` ")
+                    await sender.replyf(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe said: \n{AFKSK}\n`.`")
                 USERS.update({sender.sender_id: 1})
                 COUNT_MSG = COUNT_MSG + 1
             elif apprv and sender.sender_id in USERS:
                 if USERS[sender.sender_id] % randint(2, 4) == 0:
                     if AFKREASON:
-                        await sender.reply(f"My boss **{DEFAULTUSER}** is **afk since** {afk_since}.\
-                            \n**Because my boss is** `{AFKREASON}`")
+                        await sender.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe is: {AFKREASON}.`")
                     else:
-                        await sender.reply(f"My boss {DEFAULTUSER} is **afk since** {afk_since}.\nMy boss has left a word for you only: \n{AFKSK}\n`.` ")
+                        await sender.reply(f"`My master {DEFAULTUSER} is afk since {afk_since}.\nHe said: \n{AFKSK}\n`.`")
                     USERS[sender.sender_id] = USERS[sender.sender_id] + 1
                     COUNT_MSG = COUNT_MSG + 1
                 else:
