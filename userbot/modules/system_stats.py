@@ -124,11 +124,11 @@ async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     
     await alive.edit(
-                     "Althea is alive! \n\n"
-                     f"Telethon version: {version.__version__} \n"
-                     f"Python: {python_version()} \n"
-                     f"Master User: {DEFAULTUSER} \n"
-                     f"Tagged bot version: v1.0"
+                     "`Althea is alive! \n\n`"
+                     f"`Telethon version: {version.__version__} \n`"
+                     f"`Python: {python_version()} \n`"
+                     f"`Master User: {DEFAULTUSER} \n`"
+                     f"`Tagged bot version: v1.0`"
                      )    
 
 
