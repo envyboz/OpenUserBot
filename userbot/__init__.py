@@ -17,7 +17,6 @@ from dotenv import load_dotenv
 from requests import get
 from telethon import TelegramClient
 from telethon.sessions import StringSession
-from pymongo import MongoClient
 
 load_dotenv("config.env")
 
@@ -221,19 +220,6 @@ with bot:
             "BOTLOG_CHATID environment variable isn't a "
             "valid entity. Check your environment variables/config.env file.")
         quit(1)
-
-        
-# Init Mongo
-MONGOCLIENT = MongoClient(MONGO_DB_URI, 27017, serverSelectionTimeoutMS=1)
-MONGO = MONGOCLIENT.userbot
-
-
-def is_mongo_alive():
-    try:
-        MONGOCLIENT.server_info()
-    except BaseException:
-        return False
-    return True
 
 
 # Global Variables
