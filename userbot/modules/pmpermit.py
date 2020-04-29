@@ -69,7 +69,7 @@ async def permitpm(event):
 
                 if COUNT_PM[event.chat_id] > 4:
                     await event.respond(
-                        "`You were spamming my Mastor's PM, which I didn't like.`\n"
+                        "`You were spamming my Master's PM, which I didn't like.`\n"
                         "`You have been BLOCKED and reported as SPAM, until further notice.`"
                     )
 
@@ -82,7 +82,7 @@ async def permitpm(event):
                                 BOTLOG_CHATID,
                                 "Count PM is seemingly going retard, plis restart bot!",
                             )
-                        LOGS.info("CountPM wen't rarted boi")
+                        LOGS.info("CountPM went retarted boi")
                         return
 
                     await event.client(BlockRequest(event.chat_id))
