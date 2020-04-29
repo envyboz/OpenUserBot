@@ -123,19 +123,13 @@ async def pipcheck(pip):
 async def amireallyalive(alive):
     """ For .alive command, check if the bot is running.  """
     
-    if not is_mongo_alive():
-        db = "Mongo DB seems to be failing!"
-    else:
-        db = "Databases functioning normally!"
     await alive.edit(
                      "Althea is alive! \n\n"
                      f"Telethon version: {version.__version__} \n"
                      f"Python: {python_version()} \n"
                      f"Master User: {DEFAULTUSER} \n"
-                     f"Database status: {db}\n"
                      f"Tagged bot version: v1.0"
                      )    
-
 
 
 @register(outgoing=True, pattern="^.aliveu")
